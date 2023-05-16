@@ -13,13 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tblCustomer', function (Blueprint $table) {
-            $table->bigIncrements('CustID');
-            $table->string('CustName', 150)->unique();
-            $table->bigInteger('CustPriceCatID')->unsigned();
-            $table->bigInteger('CustRegionID')->unsigned();
-            $table->decimal('CustQIDBalance', 10, 2)->default(0.00);
-            $table->decimal('CustUSDBanace', 10, 2)->default(0.00);
+        Schema::create('tblProducts', function (Blueprint $table) {
+            $table->bigIncrements('ProdID');
+            $table->string('ProdName', 200);
+            $table->bigInteger('ProdOrgID');
+            $table->decimal('ProdSalePrice1', 10, 2)->default(0.00);
+            $table->decimal('ProdSalePrice2', 10, 2)->default(0.00);
+            $table->decimal('ProdSalePrice3', 10, 2)->default(0.00);
+            $table->decimal('ProdSalePrice4', 10, 2)->default(0.00);
+            $table->integer('ProdGiftBonus')->default(0);
+            $table->integer('ProdGiftQTY')->default(0);
+            $table->string('ProdNote', 250)->nullable();
+            $table->float('ProdCurrentBalance')->default(0);
             $table->timestamps();
         });
     }

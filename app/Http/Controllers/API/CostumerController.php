@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
-use App\Models\Customer;
+use App\Models\Costumer;
 use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Support\Facades\Validator;
 class CostumerController extends BaseController
@@ -15,8 +15,8 @@ class CostumerController extends BaseController
      */
     public function index()
     {
-        $customers = Customer::all();
-        return $this->sendResponse($costumer, "Costumer");
+        $customers = Costumer::all();
+        return $this->sendResponse($customers, "Costumer");
     }
 
     /**
@@ -27,18 +27,29 @@ class CostumerController extends BaseController
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $rules = [
             'custemrs' => 'required|min:1',
-            'custemrs*.CustName' => 'required|unique:tblcustemrs*.Customer|max:150',
-            'custemrs*.CustPriceCatID' => 'required|exists:tblPriceCat,PriceCatID',
-            'custemrs*.CustRegionID' => 'required|exists:tblRegion,RegID',
-            'custemrs*.CustQIDBalance' => 'required|numeric',
-            'custemrs*.CustUSDBanace' => 'required|numeric',
-            'custemrs*.CustId' => 'required|int'
-        ]);
-
-        $customer = Customer::create($validatedData);
-
+            'custemrs.*.CustName' => 'required|unique:tblcustemrs*.Customer|max:150',
+            'custemrs.*.CustPriceCatID' => 'required|exists:tblPriceCat,PriceCatID',
+            'custemrs.*.CustRegionID' => 'required|exists:tblRegion,RegID',
+            'custemrs.*.CustQIDBalance' => 'required|numeric',
+            'custemrs.*.CustUSDBanace' => 'required|numeric',
+            'custemrs.*.CustId' => 'required|int'
+        ];
+        $input = $request->all();
+        Validator::make($input, $rules);
+        for ($x = 0; $x < count($input['custemrs']); $x++) {
+            $costumer_input = $input['custemrs'][$x];
+       
+            $costumer = Costumer::firstwhere('CustId',$costumer_input['CustId']);
+            if(is_null($costumer)){
+                 $costumer = Costumer::create($costumer_input);
+            }else{
+                $costumer->where('CustId',$costumer_input['CustId'])->update($costumer_input);
+            }
+          } 
+        
+       
         return $this->sendResponse($costumer, "Costumer");
     }
 
@@ -50,14 +61,14 @@ class CostumerController extends BaseController
      */
     public function show($id)
     {
-        $customer = Customer::findwhere('CustId',$id);
+        $customer = Costumer::findwhere('CustId',$id);
 
         if (!$customer) {
             return $this->sendError('Costumer does not exist');
         }
 
         return $this->sendResponse($costumer, "Costumer");
-    }
+    } 
 
     /**
      * Update the specified resource in storage.
@@ -76,7 +87,7 @@ class CostumerController extends BaseController
             'CustUSDBanace' => 'required|numeric'
         ]);
 
-        $customer = Customer::findwhere('CustId',$id);
+        $customer = Costumer::findwhere('CustId',$id);
 
         if (!$customer) {
             return $this->sendError('Costumer does not exist');
@@ -95,7 +106,7 @@ class CostumerController extends BaseController
      */
     public function destroy($id)
     {
-        $customer = Customer::wherefind('CustId',$id);
+        $customer = Costumer::wherefind('CustId',$id);
 
         if (!$customer) {
             return $this->sendError('Costumer does not exist');

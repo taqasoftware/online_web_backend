@@ -1,21 +1,27 @@
 <?php
 
-namespace App\Models;
+    namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Database\Eloquent\Factories\HasFactory;
+    use Illuminate\Database\Eloquent\Model;
 
-class Costumer extends Model
-{
-    use HasFactory;
-    protected $fillable = [
-        'CustID',
-        'CustName',
-        'CustPriceCatID',
-        'CustRegionID',
-        'CustQIDBalance',
-        'CustUSDBanace'
-    ];
-    protected $table = 'tblCostumer';
+    class Costumer extends Model
+    {
+        use HasFactory;
+        protected $table = 'tblCustomer';
+    
 
-}
+        protected $fillable = [
+            'CustName', 'CustPriceCatID', 'CustRegionID', 'CustQIDBalance', 'CustUSDBanace'
+        ];
+
+        public function priceCategory()
+        {
+            return $this->belongsTo(PriceCategory::class, 'CustPriceCatID');
+        }
+
+        public function region()
+        {
+            return $this->belongsTo(Region::class, 'CustRegionID');
+        }
+    }

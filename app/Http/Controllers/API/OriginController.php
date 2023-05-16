@@ -46,7 +46,7 @@ class OriginController extends BaseController
        
             $origin = Origin::firstwhere('OrgId',$reg['OrgId']);
             if(is_null($origin)){
-                 $origin = Origin::create($reg);
+                 $origin = Origin::create(['OrgId' => $reg['OrgId'], 'OrgName'=> $reg['OrgName']]);
             }else{
                 $origin->where('OrgId',$reg['OrgId'])->update(['OrgId' => $reg['OrgId'], 'OrgName' => $reg['OrgName']]);
             }

@@ -16,12 +16,23 @@ class ProductController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $product = Product::all();
-        return $this->sendResponse($product, "Product");
-    }
+        $origin_id = $request->query('origin_id'); 
+        if ($origin_id && $origin_id != 'undefined') {
+            $products = Product::where('ProdOrgID', $origin_id)->paginate(10);
+            
+          
+            return $this->sendResponse($products, 'Products');
+        }
+        else {
 
+            $products = Product::paginate(10);
+        }
+        return $this->sendResponse($products, 'Products');
+    }
+    
+  
     
 
     /**
@@ -131,4 +142,20 @@ class ProductController extends BaseController
         }
         return $this->sendResponse($product, 'Product deleted Successfully');
     }
+
+
+
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+ 
+        $results = Product::where('ProdName', 'like', "%{$query}%")->get();
+
+        return response()->json($results);
+    }
+
+
+   
+
 }

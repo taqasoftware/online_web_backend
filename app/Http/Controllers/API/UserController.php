@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\User;
- 
+use App\Models\Costumer;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -26,6 +26,20 @@ class UserController extends BaseController
 
     $users = User::all();
     return $this->sendResponse($users, "Users");
+  }
+
+
+  public function autoComplete(Request $request){
+    $searchTerm = $request->input('query');
+        
+    // Fetch the autocomplete suggestions based on the search term
+    
+    // Example: Fetch suggestions from a database table
+    $suggestions = Costumer::
+        where('CustName', 'like', '%'.$searchTerm.'%') 
+        ->pluck('CustName');
+    
+    return response()->json($suggestions);
   }
 
 

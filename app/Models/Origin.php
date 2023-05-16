@@ -13,4 +13,9 @@ class Origin extends Model
         'OrgName'
     ];
     protected $table = 'tblOrigin';
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'ProdOrgID');
+    }
 }

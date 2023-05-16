@@ -13,4 +13,9 @@ class Region extends Model
         'RegName'
     ];
     protected $table = 'tblRegion';
+
+    public function customers()
+    {
+        return $this->hasMany(Customer::class, 'CustRegionID');
+    }
 }
