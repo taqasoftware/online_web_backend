@@ -8,6 +8,7 @@ use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\CostumerController; 
 use App\Http\Controllers\API\InvoiceController;
 use App\Http\Controllers\API\InvoiceDetailsController;
+use App\Http\Controllers\API\VoucherController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -88,6 +89,15 @@ Route::group(['prefix' => 'invoices'], function () {
     Route::put('/{id}', [InvoiceController::class, 'updateStatus']);
 
 }); 
+
+Route::group(['prefix' => 'voucher'], function () { 
+    Route::get('/', [VoucherController::class, 'index']);
+    Route::post('/', [VoucherController::class, 'store']);
+    Route::get('/{id}', [VoucherController::class, 'show']);
+    Route::patch('/{id}', [VoucherController::class, 'update']);
+    Route::delete('/{id}', [VoucherController::class, 'destroy']);
+});
+ 
 
 
 Route::group(['prefix' => 'invoice-details'], function () { 
