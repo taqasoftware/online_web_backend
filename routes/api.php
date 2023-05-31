@@ -18,8 +18,7 @@ use App\Http\Controllers\API\VoucherController;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/
-
+*/ 
 Route::post("register", [AuthController::class, "register"]); 
 Route::post("login", [AuthController::class, "login"]);
     
@@ -85,26 +84,28 @@ Route::group(['prefix' => 'invoices'], function () {
     Route::get('/{id}', [InvoiceController::class, 'show']);
     Route::patch('/{id}', [InvoiceController::class, 'update']);
     Route::delete('/{id}', [InvoiceController::class, 'destroy']);
-    Route::put('/{id}', [InvoiceController::class, 'destroy']);
     Route::put('/{id}', [InvoiceController::class, 'updateStatus']);
 
 }); 
 
-Route::group(['prefix' => 'voucher'], function () { 
-    Route::get('/', [VoucherController::class, 'index']);
-    Route::post('/', [VoucherController::class, 'store']);
-    Route::get('/{id}', [VoucherController::class, 'show']);
-    Route::patch('/{id}', [VoucherController::class, 'update']);
-    Route::delete('/{id}', [VoucherController::class, 'destroy']);
-});
+
  
 
 
 Route::group(['prefix' => 'invoice-details'], function () { 
-    Route::get('/invoice/{id}', [InvoiceDetailsController::class, 'index']);
-    Route::get('/', [InvoiceDetailsController::class, 'index']);
+    Route::get('/invoice/{id}', [InvoiceDetailsController::class, 'index']); 
     Route::post('/', [InvoiceDetailsController::class, 'store']);
     Route::get('/{id}', [InvoiceDetailsController::class, 'show']);
     Route::patch('/{id}', [InvoiceDetailsController::class, 'update']);
     Route::delete('/{id}', [InvoiceDetailsController::class, 'destroy']); 
 }); 
+
+ 
+
+Route::group(['prefix' => 'voucher'], function () {
+    Route::get('/', [VoucherController::class, 'index']);
+    Route::post('/', [VoucherController::class, 'store']);
+    Route::get('/{id}', [VoucherController::class, 'show']);
+    Route::put('/{id}', [VoucherController::class, 'update']);
+    Route::delete('/{id}', [VoucherController::class, 'destroy']);
+});

@@ -32,8 +32,8 @@ class RegionController extends BaseController
     {
         $rules = [
             'regions' => 'required|min:1',
-            'regions*.RegName' => 'required|string|max:255',
-            'regions*.RegId' => 'required|int'
+            'regions.*.RegName' => 'required|string|max:255',
+            'regions.*.RegId' => 'required|int'
         ];
     
         $validator = Validator::make($request->all(), $rules);

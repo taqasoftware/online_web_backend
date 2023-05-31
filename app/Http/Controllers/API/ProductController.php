@@ -20,7 +20,7 @@ class ProductController extends BaseController
     {
         $origin_id = $request->query('origin_id'); 
         if ($origin_id && $origin_id != 'undefined') {
-            $products = Product::where('ProdOrgID', $origin_id)->paginate(10);
+            $products = Product::where('prodOrgID', $origin_id)->paginate(10);
             
           
             return $this->sendResponse($products, 'Products');
@@ -45,17 +45,17 @@ class ProductController extends BaseController
     {
         $rules = [
             'products' => 'required|min:1',
-            'products*.prodName' => 'required|max:200',
-            'products*.prodId' => 'required|max:200',
-            'products*.prodOrgID' => 'required|integer|min:1',
-            'products*.prodSalePrice1' => 'required|numeric|min:0',
-            'products*.prodSalePrice2' => 'required|numeric|min:0',
-            'products*.prodSalePrice3' => 'required|numeric|min:0',
-            'products*.prodSalePrice4' => 'required|numeric|min:0',
-            'products*.prodGiftBonus' => 'required|integer|min:0',
-            'products*.prodGiftQTY' => 'required|integer|min:0',
-            'products*.prodNote' => 'nullable|max:250',
-            'products*.prodCurrentBalance' => 'required|numeric|min:0'
+            'products.*.ProdName' => 'required|max:200',
+            'products.*.ProdID' => 'required|max:200',
+            'products.*.ProdOrgID' => 'required|integer|min:1',
+            'products.*.ProdSalePrice1' => 'required|numeric|min:0',
+            'products.*.ProdSalePrice2' => 'required|numeric|min:0',
+            'products.*.ProdSalePrice3' => 'required|numeric|min:0',
+            'products.*.ProdSalePrice4' => 'required|numeric|min:0',
+            'products.*.ProdGiftBonus' => 'required|integer|min:0',
+            'products.*.ProdGiftQTY' => 'required|integer|min:0',
+            'products.*.ProdNote' => 'nullable|max:250',
+            'products.*.ProdCurrentBalance' => 'required|numeric|min:0'
         ];
     
         $validator = Validator::make($request->all(), $rules);
@@ -86,7 +86,7 @@ class ProductController extends BaseController
      */
     public function show($id)
     { 
-        $product = Product::firstwhere('ProdId',$id);
+        $product = Product::firstwhere('ProdID',$id);
       
         if(is_null($product)){
 
@@ -123,7 +123,7 @@ class ProductController extends BaseController
         $product = Product::findOrFail($id);
         $product->update($data);
     
-        return $this->sendResponse($region, 'Region updated Successfully!');
+        return $this->sendResponse($product, 'Region updated Successfully!');
     }
 
     /**
@@ -134,7 +134,7 @@ class ProductController extends BaseController
      */
     public function destroy($id)
     {
-        $product = Product::where('ProdId',$id)->delete();
+        $product = Product::where('ProdID',$id)->delete();
 
         if ($product == 0) {
 

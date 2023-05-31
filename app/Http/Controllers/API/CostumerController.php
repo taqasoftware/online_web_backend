@@ -28,18 +28,18 @@ class CostumerController extends BaseController
     public function store(Request $request)
     {
         $rules = [
-            'custemrs' => 'required|min:1',
-            'custemrs.*.CustName' => 'required|unique:tblcustemrs*.Customer|max:150',
-            'custemrs.*.CustPriceCatID' => 'required|exists:tblPriceCat,PriceCatID',
-            'custemrs.*.CustRegionID' => 'required|exists:tblRegion,RegID',
-            'custemrs.*.CustQIDBalance' => 'required|numeric',
-            'custemrs.*.CustUSDBanace' => 'required|numeric',
-            'custemrs.*.CustId' => 'required|int'
+            'customers' => 'required|min:1',
+            'customers.*.CustName' => 'required|unique:tblcustomers*.Customer|max:150',
+            'customers.*.CustPriceCatID' => 'required|exists:tblPriceCat,PriceCatID',
+            'customers.*.CustRegionID' => 'required|exists:tblRegion,RegID',
+            'customers.*.CustQIDBalance' => 'required|numeric',
+            'customers.*.CustUSDBanace' => 'required|numeric',
+            'customers.*.CustId' => 'required|int'
         ];
         $input = $request->all();
         Validator::make($input, $rules);
-        for ($x = 0; $x < count($input['custemrs']); $x++) {
-            $costumer_input = $input['custemrs'][$x];
+        for ($x = 0; $x < count($input['customers']); $x++) {
+            $costumer_input = $input['customers'][$x];
        
             $costumer = Costumer::firstwhere('CustId',$costumer_input['CustId']);
             if(is_null($costumer)){
@@ -61,13 +61,13 @@ class CostumerController extends BaseController
      */
     public function show($id)
     {
-        $customer = Costumer::findwhere('CustId',$id);
+        $customer = Costumer::firstwhere('CustId',$id);
 
         if (!$customer) {
             return $this->sendError('Costumer does not exist');
         }
 
-        return $this->sendResponse($costumer, "Costumer");
+        return $this->sendResponse($customer, "Costumer");
     } 
 
     /**
@@ -95,7 +95,7 @@ class CostumerController extends BaseController
 
         $customer->update($validatedData);
 
-        return $this->sendResponse($costumer, "Costumer");
+        return $this->sendResponse($customer, "Costumer");
     }
 
     /**
@@ -106,7 +106,7 @@ class CostumerController extends BaseController
      */
     public function destroy($id)
     {
-        $customer = Costumer::wherefind('CustId',$id);
+        $customer = Costumer::where('CustID',$id);
 
         if (!$customer) {
             return $this->sendError('Costumer does not exist');
@@ -114,6 +114,6 @@ class CostumerController extends BaseController
 
         $customer->delete();
 
-        return $this->sendResponse($costumer, "Costumer");
+        return $this->sendResponse($customer, "Costumer");
     }
 }

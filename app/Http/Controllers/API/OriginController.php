@@ -32,8 +32,8 @@ class OriginController extends BaseController
     {
         $rules = [
             'origins' => 'required|min:1',
-            'origins*.OrgName' => 'required|string|max:255',
-            'origins*.OrgId' => 'required|int'
+            'origins.*.OrgName' => 'required|string|max:255',
+            'origins.*.OrgID' => 'required|int'
         ];
     
         $validator = Validator::make($request->all(), $rules);
@@ -44,11 +44,11 @@ class OriginController extends BaseController
           for ($x = 0; $x < count($input['origins']); $x++) {
             $reg = $input['origins'][$x];
        
-            $origin = Origin::firstwhere('OrgId',$reg['OrgId']);
+            $origin = Origin::firstwhere('OrgID',$reg['OrgID']);
             if(is_null($origin)){
-                 $origin = Origin::create(['OrgId' => $reg['OrgId'], 'OrgName'=> $reg['OrgName']]);
+                 $origin = Origin::create(['OrgID' => $reg['OrgID'], 'OrgName'=> $reg['OrgName']]);
             }else{
-                $origin->where('OrgId',$reg['OrgId'])->update(['OrgId' => $reg['OrgId'], 'OrgName' => $reg['OrgName']]);
+                $origin->where('OrgID',$reg['OrgID'])->update(['OrgID' => $reg['OrgID'], 'OrgName' => $reg['OrgName']]);
             }
           } 
         
@@ -64,7 +64,7 @@ class OriginController extends BaseController
      */
     public function show($id)
     { 
-        $origin = Origin::firstwhere('OrgId',$id);
+        $origin = Origin::firstwhere('OrgID',$id);
       
         if(is_null($origin)){
 
@@ -93,12 +93,12 @@ class OriginController extends BaseController
           return $this->sendError('Validation error', $validator->errors());
         }
     
-        $origin = Origin::firstwhere('OrgId',$id); 
+        $origin = Origin::firstwhere('OrgID',$id); 
         $updateParam = [
           "OrgName" => $input['OrgName']
         ];
         try {
-          $origin->where('OrgId',$id)->update($updateParam);
+          $origin->where('OrgID',$id)->update($updateParam);
         } catch (\Error $e) {
           return $this->sendError('Origin does not exist');
         }
@@ -113,7 +113,7 @@ class OriginController extends BaseController
      */
     public function destroy($id)
     {
-        $origin = Origin::where('OrgId',$id)->delete();
+        $origin = Origin::where('OrgID',$id)->delete();
 
         if ($origin == 0) {
 
