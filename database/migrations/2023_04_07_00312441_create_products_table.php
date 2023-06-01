@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tblProducts', function (Blueprint $table) {
-            $table->bigIncrements('ProdID');
+            $table->bigInteger('ProdID')->primary()->unsigned()->index();
             $table->string('ProdName', 200);
             $table->bigInteger('ProdOrgID');
             $table->decimal('ProdSalePrice1', 10, 2)->default(0.00);

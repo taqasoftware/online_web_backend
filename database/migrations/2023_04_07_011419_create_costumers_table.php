@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
             Schema::create('tblCustomer', function (Blueprint $table) {
-                $table->bigIncrements('CustID');
+                $table->bigInteger('CustID')->primary()->unsigned()->index();
                 $table->string('CustName', 150)->unique();
                 $table->bigInteger('CustPriceCatID')->unsigned()->index();;
                 $table->bigInteger('CustRegionID')->unsigned()->index();;
@@ -25,7 +25,7 @@ return new class extends Migration
                 $table->foreign('CustPriceCatID')->references('PriceCatID')->on('tblPriceCat')->onUpdate('cascade');
                 $table->foreign('CustRegionID')->references('RegID')->on('tblRegion')->onUpdate('cascade');
             });
-    }
+    } 
 
     /**
      * Reverse the migrations.

@@ -65,7 +65,7 @@ class ProductController extends BaseController
           $input = $request->all();  
           for ($x = 0; $x < count($input['products']); $x++) {
             $product_input = $input['products'][$x];
-       
+          
             $prod = Product::firstwhere('ProdID',$product_input['ProdID']);
             if(is_null($prod)){
                  $prod = Product::create($product_input);

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tblPriceCat', function (Blueprint $table) {
-            $table->id('PriceCatID')->unsigned()->index();;
+            $table->bigInteger('PriceCatID')->unsigned()->index();;
             $table->string('PriceCatName', 20);
         });
     }

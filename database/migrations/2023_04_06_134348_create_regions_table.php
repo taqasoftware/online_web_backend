@@ -10,12 +10,12 @@ return new class extends Migration
      * Run the migrations.
      *
      * @return void
-     */
+     */ 
     public function up()
     {
         Schema::create('tblRegion', function (Blueprint $table) {
    
-            $table->bigIncrements('RegID');
+            $table->bigInteger('RegID')->primary()->unsigned()->index();
             $table->string('RegName')->unique();
             $table->timestamps();
         });

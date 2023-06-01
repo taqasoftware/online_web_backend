@@ -29,19 +29,23 @@ class CostumerController extends BaseController
     {
         $rules = [
             'customers' => 'required|min:1',
-            'customers.*.CustName' => 'required|unique:tblcustomers*.Customer|max:150',
-            'customers.*.CustPriceCatID' => 'required|exists:tblPriceCat,PriceCatID',
-            'customers.*.CustRegionID' => 'required|exists:tblRegion,RegID',
+            'customers.*.CustName' => 'required',
+            'customers.*.CustID' => 'required',
+            'customers.*.CustPriceCatID' => 'required',
+            'customers.*.CustRegionID' => 'required',
             'customers.*.CustQIDBalance' => 'required|numeric',
             'customers.*.CustUSDBanace' => 'required|numeric',
             'customers.*.CustId' => 'required|int'
-        ];
+        ]; 
         $input = $request->all();
-        Validator::make($input, $rules);
+        $validator = Validator::make($input, $rules);
+        if ($validator->fails()) {
+            return $this->sendError($validator->errors());
+        }
         for ($x = 0; $x < count($input['customers']); $x++) {
             $costumer_input = $input['customers'][$x];
-       
-            $costumer = Costumer::firstwhere('CustId',$costumer_input['CustId']);
+     
+            $costumer = Costumer::firstwhere('CustID',$costumer_input['CustID']);
             if(is_null($costumer)){
                  $costumer = Costumer::create($costumer_input);
             }else{
@@ -86,7 +90,7 @@ class CostumerController extends BaseController
             'CustQIDBalance' => 'required|numeric',
             'CustUSDBanace' => 'required|numeric'
         ]);
-
+        
         $customer = Costumer::findwhere('CustId',$id);
 
         if (!$customer) {

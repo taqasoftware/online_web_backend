@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tblOrigin', function (Blueprint $table) {
-            $table->integer('OrgID');
+            $table->bigInteger('OrgID')->primary()->unsigned()->index();
             $table->string('OrgName')->unique();
             $table->timestamps();
         });

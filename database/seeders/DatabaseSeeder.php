@@ -13,13 +13,16 @@ class DatabaseSeeder extends Seeder
     {
         $adminRole = Role::create(['name' => 'admin']);
         $agentRole = Role::create(['name' => 'agent']);
+  
         $admin = User::create([
+            'id' => 1,
             'name' => 'ssssssss',
             'password' => bcrypt('ssssssss'),
             'is_active' => 1,
         ]);
 
         $agent = User::create([
+            'id' => 2,
             'name' => 'aaaaaaaa',
             'password' => bcrypt('aaaaaaaa'),
             'is_active' => 1,
@@ -30,25 +33,28 @@ class DatabaseSeeder extends Seeder
  
 
             // Create 10 Region records
-            for ($i = 0; $i < 10; $i++) {
+            for ($i = 1; $i < 10; $i++) {
                 Region::create([
+                    'RegID' => $i,
                     'RegName' => 'Region ' . ($i + 1),
                 ]);
             }
 
             // Create 10 Origin records
-            for ($i = 0; $i < 10; $i++) {
+            for ($i = 1; $i < 10; $i++) {
                 Origin::create([
+                    'OrgID' => $i,
                     'OrgName' => 'Origin ' . ($i + 1),
                 ]);
             }
 
             // Get all regions
             $regions = Region::all();
-
+            
             // Create 10 Product records
-            for ($i = 0; $i < 10; $i++) {
+            for ($i = 1; $i < 10; $i++) {
                 Product::create([
+                    'ProdID' => $i,
                     'ProdName' => 'Product ' . ($i + 1),
                     'ProdOrgID' => 1,
                     'ProdSalePrice1' => 10.99,
@@ -63,10 +69,11 @@ class DatabaseSeeder extends Seeder
             }
 
             // Create 10 Customer records
-            for ($i = 0; $i < 10; $i++) {
+            for ($i = 1; $i < 10; $i++) {
                 Costumer::create([
                     'CustName' => 'Customer ' . ($i + 1),
-                    // 'CustPriceCatID' => 1,
+                    'CustID' => $i,
+                    'CustPriceCatID' => 1,
                     'CustRegionID' => 2,
                     'CustQIDBalance' => 100,
                     'CustUSDBanace' => 200,
