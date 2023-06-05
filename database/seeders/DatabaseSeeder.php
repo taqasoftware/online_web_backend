@@ -15,17 +15,19 @@ class DatabaseSeeder extends Seeder
         $agentRole = Role::create(['name' => 'agent']);
   
         $admin = User::create([
-            'id' => 1,
+  
             'name' => 'ssssssss',
             'password' => bcrypt('ssssssss'),
             'is_active' => 1,
+            'userId' => 1
         ]);
 
         $agent = User::create([
-            'id' => 2,
+     
             'name' => 'aaaaaaaa',
             'password' => bcrypt('aaaaaaaa'),
             'is_active' => 1,
+            'userId' => 2
         ]);
 
         $admin->assignRole($adminRole);

@@ -34,8 +34,7 @@ class CostumerController extends BaseController
             'customers.*.CustPriceCatID' => 'required',
             'customers.*.CustRegionID' => 'required',
             'customers.*.CustQIDBalance' => 'required|numeric',
-            'customers.*.CustUSDBanace' => 'required|numeric',
-            'customers.*.CustId' => 'required|int'
+            'customers.*.CustUSDBanace' => 'required|numeric', 
         ]; 
         $input = $request->all();
         $validator = Validator::make($input, $rules);
@@ -49,7 +48,7 @@ class CostumerController extends BaseController
             if(is_null($costumer)){
                  $costumer = Costumer::create($costumer_input);
             }else{
-                $costumer->where('CustId',$costumer_input['CustId'])->update($costumer_input);
+                $costumer->where('CustID',$costumer_input['CustID'])->update($costumer_input);
             }
           } 
         

@@ -1,0 +1,1096 @@
+openapi: 3.0.3
+info:
+  title: taqa
+  description: taqa project API
+  version: 1.0.0
+ 
+paths:
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Get all users
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      tags:
+        - Users
+      summary: Create a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+
+  /users/{id}:
+    get:
+      tags:
+        - Users
+      summary: Get a user by ID
+      parameters:
+        - in: path
+          name: id
+          description: ID of the user to retrieve
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '404':
+          description: User not found
+
+    put:
+      tags:
+        - Users
+      summary: Update a user by ID
+      parameters:
+        - in: path
+          name: id
+          description: ID of the user to update
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '404':
+          description: User not found
+
+  /users/{id}/activate:
+    put:
+      tags:
+        - Users
+      summary: Activate a user by ID
+      parameters:
+        - in: path
+          name: id
+          description: ID of the user to activate
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '404':
+          description: User not found
+  /invoices:
+    get:
+      tags:
+        - Invoices
+      summary: Get all Invoices
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoicesResponse'
+    post:
+      tags:
+        - Invoices
+      summary: Create an Invoice
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateInvoiceRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceResponse'
+
+  /invoices/{id}:
+    put:
+      tags:
+        - Invoices
+      summary: Update the status of an Invoice
+      parameters:
+        - in: path
+          name: id
+          description: ID of the Invoice to update
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateInvoiceStatusRequest'
+      responses:
+        '200':
+          description: Success
+        '404':
+          description: Invoice not found
+        '500':
+          description: Internal Server Error
+
+
+  /products:
+    get:
+      tags:
+        - Products
+      summary: Get all Products
+      parameters:
+        - in: query
+          name: origin_id
+          description: Origin ID for filtering products
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductsResponse'
+    post:
+      tags:
+        - Products
+      summary: Create or update Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductsRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+
+  /products/{productId}:
+    get:
+      tags:
+        - Products
+      summary: Get a Product by ID
+      parameters:
+        - in: path
+          name: productId
+          description: ID of the Product to retrieve
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+  
+    delete:
+      tags:
+        - Products
+      summary: Delete a Product by ID
+      parameters:
+        - in: path
+          name: productId
+          description: ID of the Product to delete
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+        '404':
+          description: Product not found
+        '500':
+          description: Internal Server Error
+
+  /products/search:
+    post:
+      tags:
+        - Products
+      summary: Search Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchProductResponse'
+  /vouchers:
+    get:
+      tags:
+        - Vouchers
+      summary: Get all Vouchers
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VouchersResponse'
+    post:
+      tags:
+        - Vouchers
+      summary: Create a Voucher
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateVoucherRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoucherResponse'
+
+  /vouchers/{voucherId}:
+    get:
+      tags:
+        - Vouchers
+      summary: Get a Voucher by ID
+      parameters:
+        - in: path
+          name: voucherId
+          description: ID of the Voucher to retrieve
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoucherResponse'
+    delete:
+      tags:
+        - Vouchers
+      summary: Delete a Voucher by ID
+      parameters:
+        - in: path
+          name: voucherId
+          description: ID of the Voucher to delete
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+        '404':
+          description: Voucher not found
+        '500':
+          description: Internal Server Error
+  /regions:
+    get:
+      tags:
+        - Regions
+      summary: Get all Regions
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegionsResponse'
+    post:
+      tags:
+        - Regions
+      summary: Create multiple Regions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRegionsRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateRegionsResponse'
+
+  /regions/{regionId}:
+    get:
+      tags:
+        - Regions
+      summary: Get a Region by ID
+      parameters:
+        - in: path
+          name: regionId
+          description: ID of the Region to retrieve
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegionResponse'
+ 
+ 
+    delete:
+      tags:
+        - Regions
+      summary: Delete a Region by ID
+      parameters:
+        - in: path
+          name: regionId
+          description: ID of the Region to delete
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+        '404':
+          description: Region not found
+        '500':
+          description: Internal Server Error
+  /origins:
+    get:
+      tags:
+        - Origins
+      summary: Get all Origins
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OriginsResponse'
+    post:
+      tags:
+        - Origins
+      summary: Create multiple Origins
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOriginsRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOriginsResponse'
+
+  /origins/{originId}:
+    get:
+      tags:
+        - Origins
+      summary: Get an Origin by ID
+      parameters:
+        - in: path
+          name: originId
+          description: ID of the Origin to retrieve
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OriginResponse'
+ 
+    delete:
+      tags:
+        - Origins
+      summary: Delete an Origin by ID
+      parameters:
+        - in: path
+          name: originId
+          description: ID of the Origin to delete
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+        '404':
+          description: Origin not found
+        '500':
+          description: Internal Server Error
+  /customers:
+    post:
+      tags:
+        - Customers
+      summary: Create multiple customers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCustomersRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCustomersResponse'
+  
+    get:
+      tags:
+        - Customers
+      summary: Get all Customers
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCustomersResponse'
+  /customers/{customerId}:
+    get:
+      tags:
+        - Customers
+      summary: Get a customer by ID
+      parameters:
+        - in: path
+          name: customerId
+          description: ID of the customer to retrieve
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCustomersResponse'
+     
+    delete:
+      tags:
+        - Customers
+      summary: Delete a customer
+      parameters:
+        - in: path
+          name: customerId
+          description: ID of the customer to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+        '404':
+          description: Customer not found
+        '500':
+          description: Internal Server Error
+
+components:
+  schemas:
+    CreateCustomersRequest:
+      type: object
+      properties:
+        customers:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/CustomerInput'
+
+    CustomerInput:
+      type: object
+      properties:
+        CustName:
+          type: string
+        CustID:
+          type: string
+        CustPriceCatID:
+          type: string
+        CustRegionID:
+          type: string
+        CustQIDBalance:
+          type: string
+          pattern: ^\d+(\.\d{1,2})?$
+        CustUSDBalance:
+          type: string
+          pattern: ^\d+(\.\d{1,2})?$
+
+    CreateCustomersResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerOutput'
+        message:
+          type: string
+          example: "Customer"
+    
+    CustomersResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+          properties:
+            CustID:
+              type: number
+            CustName:
+              type: string
+            CustPriceCatID:
+              type: number
+            CustRegionID:
+              type: number
+            CustQIDBalance:
+              type: string
+            CustUSDBalance:
+              type: string
+            created_at:
+              type: string
+              format: date-time
+            updated_at:
+              type: string
+              format: date-time
+            message:
+              type: string
+              example: "Customer"
+
+    CustomerOutput:
+      type: object
+      properties:
+        CustID:
+          type: number
+        CustName:
+          type: string
+        CustPriceCatID:
+          type: number
+        CustRegionID:
+          type: number
+        CustQIDBalance:
+          type: string
+        CustUSDBalance:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    CreateOriginsRequest:
+      type: object
+      properties:
+        origins:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/OriginInput'
+
+    OriginInput:
+      type: object
+      properties:
+        OrgName:
+          type: string
+        OrgID:
+          type: integer
+
+    CreateOriginsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OriginOutput'
+        message:
+          type: string
+          example: "Origin created"
+
+    OriginsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OriginOutput'
+        message:
+          type: string
+          example: "Origins"
+
+    OriginResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/OriginOutput'
+        message:
+          type: string
+          example: "Origin"
+
+    OriginOutput:
+      type: object
+      properties:
+        OrgID:
+          type: integer
+        OrgName:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    CreateRegionsRequest:
+      type: object
+      properties:
+        regions:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/RegionInput'
+
+    RegionInput:
+      type: object
+      properties:
+        RegName:
+          type: string
+        RegId:
+          type: integer
+
+    CreateRegionsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/RegionOutput'
+        message:
+          type: string
+          example: "Region created"
+
+    RegionsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/RegionOutput'
+        message:
+          type: string
+          example: "Regions"
+
+    RegionResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/RegionOutput'
+        message:
+          type: string
+          example: "Region"
+
+    RegionOutput:
+      type: object
+      properties:
+        RegID:
+          type: integer
+        RegName:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    CreateVoucherRequest:
+      type: object
+      properties:
+        voucherDate:
+          type: string
+          format: date
+        voucherCustomerID:
+          type: integer
+          minimum: 1
+        voucherAgentID:
+          type: integer
+          minimum: 1
+        voucherAccountUSD:
+          type: number
+          minimum: 0
+        voucherAccountQID:
+          type: number
+          minimum: 0
+        voucherPaidUSD:
+          type: number
+          minimum: 0
+        voucherPaidQID:
+          type: number
+          minimum: 0
+        voucherExchangeRate:
+          type: number
+
+    VoucherResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/VoucherOutput'
+        message:
+          type: string
+          example: "Voucher"
+
+    VouchersResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/VoucherOutput'
+        message:
+          type: string
+          example: "Vouchers"
+
+    VoucherOutput:
+      type: object
+      properties:
+        voucherID:
+          type: integer
+        voucherDate:
+          type: string
+          format: date
+        voucherCustomerID:
+          type: integer
+        voucherAgentID:
+          type: integer
+        voucherAccountUSD:
+          type: number
+        voucherAccountQID:
+          type: number
+        voucherPaidUSD:
+          type: number
+        voucherPaidQID:
+          type: number
+        voucherExchangeRate:
+          type: number
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    CreateProductsRequest:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductInput'
+   
+    ProductInput:
+      type: object
+      properties:
+        ProdName:
+          type: string
+          maxLength: 200
+        ProdID:
+          type: string
+          maxLength: 200
+        ProdOrgID:
+          type: integer
+          minimum: 1
+        ProdSalePrice1:
+          type: number
+          minimum: 0
+        ProdSalePrice2:
+          type: number
+          minimum: 0
+        ProdSalePrice3:
+          type: number
+          minimum: 0
+        ProdSalePrice4:
+          type: number
+          minimum: 0
+        ProdGiftBonus:
+          type: integer
+          minimum: 0
+        ProdGiftQTY:
+          type: integer
+          minimum: 0
+        ProdNote:
+          type: string
+          maxLength: 250
+        ProdCurrentBalance:
+          type: number
+          minimum: 0
+    ProductResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Product'
+    ProductsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        links:
+          type: object
+          properties:
+            first:
+              type: string
+            last:
+              type: string
+            prev:
+              type: string
+            next:
+              type: string
+        meta:
+          type: object
+          properties:
+            current_page:
+              type: integer
+            from:
+              type: integer
+            last_page:
+              type: integer
+            path:
+              type: string
+            per_page:
+              type: integer
+            to:
+              type: integer
+            total:
+              type: integer
+    SearchProductResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/ProductInvoice'
+    CreateInvoiceRequest:
+      type: object
+      properties:
+        agent_id:
+          type: string
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductInvoice'
+        InvoiceCustId:
+          type: string
+      required:
+        - agent_id
+        - products
+        - InvoiceCustId
+
+    UpdateInvoiceStatusRequest:
+      type: object
+      properties:
+        status:
+          type: integer
+      required:
+        - status
+
+    InvoiceResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/InvoiceOutput'
+        message:
+          type: string
+          example: "Invoice"
+
+    InvoicesResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceOutput'
+        message:
+          type: string
+          example: "Invoices"
+
+    InvoiceOutput:
+      type: object
+      properties:
+        MainID:
+          type: integer
+        userd:
+          type: integer
+        CustID:
+          type: integer
+        Date:
+          type: string
+          format: date
+        name:
+          type: string
+        CustName:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    ProductInvoice:
+      type: object
+      properties:
+        ProdID:
+          type: integer
+        quantity:
+          type: integer
+        ProdGiftBonus:
+          type: integer
+        DetailUnitPrice:
+          type: number
+    CreateUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+      required:
+        - name
+        - password
+        - role
+
+    UpdateUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+      required:
+        - name
+        - password
+        - role
+
+    UserResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/User'
+        message:
+          type: string
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        role:
+          type: string
+    Product:
+      type: object
+      properties:
+        ProdID:
+          type: string
+        ProdName:
+          type: string
+        ProdOrgID:
+          type: integer
+        ProdSalePrice1:
+          type: number
+        ProdSalePrice2:
+          type: number
+        ProdSalePrice3:
+          type: number
+        ProdSalePrice4:
+          type: number
+        ProdGiftBonus:
+          type: integer
+        ProdGiftQTY:
+          type: integer
+        ProdNote:
+          type: string
+          maxLength: 250
+        ProdCurrentBalance:
+          type: number
+  parameters:
+    productId:
+      name: productId
+      in: path
+      description: ID of the Product
+      required: true
+      schema:
+        type: integer
+      
+  
+ 
+ 

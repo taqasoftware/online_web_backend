@@ -26,7 +26,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('voucherCustomerID')->references('CustID')->on('tblCustomer');
-            $table->foreign('voucherAgentID')->references('id')->on('users');
+            $table->foreign('voucherAgentID')->references('userId')->on('users');
         });
     }
 

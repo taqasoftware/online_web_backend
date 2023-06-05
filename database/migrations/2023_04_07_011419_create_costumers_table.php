@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
             Schema::create('tblCustomer', function (Blueprint $table) {
-                $table->bigInteger('CustID')->primary()->unsigned()->index();
+                $table->bigInteger('CustID')->unsigned()->index();
                 $table->string('CustName', 150)->unique();
                 $table->bigInteger('CustPriceCatID')->unsigned()->index();;
                 $table->bigInteger('CustRegionID')->unsigned()->index();;

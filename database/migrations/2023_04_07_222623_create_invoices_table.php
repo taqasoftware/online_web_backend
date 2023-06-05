@@ -21,7 +21,7 @@ return new class extends Migration
             $table->dateTime('InvoiceDate')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->integer('InvoiceStatus')->default(0);
             $table->foreign('InvoiceCustID')->references('CustID')->on('tblCustomer')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
+            $table->foreign('user_id')->references('userId')->on('users')->onUpdate('cascade');
             $table->index('user_id');
             $table->index('InvoiceCustID');
             $table->index('InvoiceDate');

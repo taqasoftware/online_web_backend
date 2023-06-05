@@ -12,7 +12,7 @@
     
 
         protected $fillable = [
-            'CustName', 'CustPriceCatID', 'CustRegionID', 'CustQIDBalance', 'CustUSDBanace'
+           "CustID", 'CustName', 'CustPriceCatID', 'CustRegionID', 'CustQIDBalance', 'CustUSDBanace'
         ];
 
         public function priceCategory()
