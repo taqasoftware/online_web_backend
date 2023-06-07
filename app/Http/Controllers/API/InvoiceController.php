@@ -20,7 +20,7 @@ class InvoiceController extends BaseController
     public function index()
     {
         $invoices = Invoice::select('tblInvoiceMain.InvoiceID as MainID', 'tblInvoiceMain.user_id as userd', 'tblInvoiceMain.InvoiceCustID as CustID', 'tblInvoiceMain.InvoiceDate as Date', 'users.name', 'tblCustomer.CustName')
-            ->join('users', 'tblInvoiceMain.user_id', '=', 'users.id')
+            ->join('users', 'tblInvoiceMain.user_id', '=', 'users.userId')
             ->join('tblCustomer', 'tblInvoiceMain.InvoiceCustID', '=', 'tblCustomer.CustID')
             ->where('tblInvoiceMain.InvoiceStatus', 1)
             ->get();

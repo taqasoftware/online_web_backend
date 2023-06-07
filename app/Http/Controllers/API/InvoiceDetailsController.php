@@ -22,7 +22,8 @@ class InvoiceDetailsController extends BaseController
             'tblInvoiceMain.InvoiceID as mainInvoiceId',
             'tblProducts.ProdName',
             'tblProducts.ProdID as prodId',
-            'tblInvoiceDetail.DetailQTY as quantity',
+            'tblInvoiceDetail.DetailGIFT as prodGift',
+            'tblInvoiceDetail.DetailQTY as prodQit',
             'tblInvoiceDetail.DetailUnitPrice as price'
         )
         ->get();

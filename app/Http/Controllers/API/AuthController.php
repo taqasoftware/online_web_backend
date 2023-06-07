@@ -20,18 +20,22 @@ class AuthController extends BaseController
     public function login(Request $request)
     {
 
+            try{
 
         if (Auth::attempt(['name' => $request->name, 'password' => $request->password])) {
             $user = Auth::user();
             $success['token'] = $user->createToken('random key')->accessToken;
             $success['name'] = $user->name;
             $success['role'] = $user->getRoleNames();
-            $success['id'] = $user->id;
+            $success['userId'] = $user->userId;
             $success['active'] = $user->isActive;
             return $this->sendResponse($success, 'User Login Successfully!');
         } else {
             return $this->sendError('Unauthorised', ['error', 'Unauthorised']);
         }
+            }catch(\Illuminate\Database\QueryException $e){
+                return $this->sendError('error', $e);
+            }
     }
 
     public function register(Request $request)

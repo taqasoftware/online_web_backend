@@ -18,7 +18,7 @@ class ProductController extends BaseController
      */
     public function index(Request $request)
     {
-        $origin_id = $request->query('origin_id'); 
+        $origin_id = $request->query('origin_id');  
         if ($origin_id && $origin_id != 'undefined') {
             $products = Product::where('prodOrgID', $origin_id)->paginate(10);
             
@@ -27,7 +27,7 @@ class ProductController extends BaseController
         }
         else {
 
-            $products = Product::paginate(10);
+            $products = Product::paginate(100000);
         }
         return $this->sendResponse($products, 'Products');
     }
